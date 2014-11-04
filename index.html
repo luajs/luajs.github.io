@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lua.js live demo</title>
+    <style type="text/css" media="screen">
+        body,div,p,pre{
+            margin:0;
+            padding:0
+        }
+        #lua {
+            position:absolute;
+            top: 34px;
+            bottom: 0;
+            left: 0;
+            right: 50%;
+        }
+        #js{
+            position:absolute;
+            top: 34px;
+            bottom: 40%;
+            left: 50%;
+            right: 0;
+        }
+        #output{
+            position:absolute;
+            top: 60%;
+            bottom: 0;
+            left: 50%;
+            right: 0;
+        }
+        #run{
+            color: #ff0;
+        }
+        body{
+            background: #333;
+        }
+        ul.dropdown div {
+            visibility: hidden;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 598;
+            width: 100%;
+            background-color: #333;
+        }
+        ul.dropdown li:hover > div {
+            visibility: visible;
+        }
+    </style>
+    <link href="css/dropdown/dropdown.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="css/dropdown/themes/default.ultimate.css" media="screen" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div><ul class="dropdown dropdown-horizontal" id="menu">
+        <li>
+            <a class="dir">About</a>
+            <div style="width: 700px;left:0px;font-weight:normal;font-size: 16px;">
+                <p>This is a live demo for <b>lua.js</b> project.</p>
+                <p>lua.js is a great project that can convert lua code to javascript.</p>
+                <p>lua.js is fully written by javascript, so both lua.js self and all generated code can be run on web.</p>
+                <p>The compiled lua.js script file is free to use. get it from <a target="_blank" href="http://github.com/tdzl2003/lua.js">http://github.com/tdzl2003/lua.js</a></p>
+                <p>Contact me with:</p>
+                <p>QQ: 402740419</p>
+                <p>E-mail: tdzl2003@gmail.com</p>
+            </div>
+        </li>
+        <li><a id="run">Compile&Run</a></li>
+        <li><a id="compile">Compile</a></li>
+    </ul></div>
+    <div style="float:right;color:white;">Lua.js Live demo</div>
+    <pre id="lua"></pre>
+    <pre id="js">/*Generated javascript code will be displayed here*/</pre>
+    <pre id="output">(`print` output and error messages will be displayed here)</pre>
+
+
+    <script src="lua.js" type="text/javascript" charset="utf-8"></script>
+    <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var luaEditor = ace.edit("lua");
+        luaEditor.setTheme("ace/theme/monokai");
+        luaEditor.getSession().setMode("ace/mode/lua");
+        luaEditor.insert("-- Write lua codes here.\n")
+        luaEditor.focus();
+
+        var jsEditor = ace.edit("js");
+        jsEditor.setTheme("ace/theme/monokai");
+        jsEditor.getSession().setMode("ace/mode/javascript");
+        jsEditor.setReadOnly(true);
+
+        var output = ace.edit("output");
+        output.setTheme("ace/theme/terminal");
+        output.setReadOnly(true);
+        output.renderer.setShowGutter(false);
+
+        luajs._G.set("print", function(){
+            for (var i = 0; i < arguments.length; i++){
+                arguments[i] = luajs.helpers.__tostring(arguments[i]);
+            }
+            var val = Array.prototype.join.call(arguments, '  ');
+            output.insert(val+"\n");
+            return [];
+        })
+
+        var as = document.getElementsByTagName("a");
+        for (var i = 0; i < as.length; i++){
+            if (!as[i].getAttribute("href")){
+                as[i].setAttribute("href", "javascript:void(0);")
+            }
+        }
+
+        document.getElementById("run").onclick = function(){
+            if (window.FlurryAgent){
+                FlurryAgent.logEvent("run");
+            }
+            var code = luaEditor.getValue();
+            output.setValue("");
+            try{
+                var js = luajs.compile(code);
+                jsEditor.setValue("");
+                jsEditor.insert(js);
+                luajs.loadString(js)();
+            } catch(e){
+                output.insert(e);
+                throw (e);
+            }
+        }
+
+        document.getElementById("compile").onclick = function(){
+            if (window.FlurryAgent){
+                FlurryAgent.logEvent("compile");
+            }
+            var code = luaEditor.getValue();
+            output.setValue("");
+            try{
+                var js = luajs.compile(code);
+                jsEditor.setValue("");
+                jsEditor.insert(js);
+            } catch(e){
+                output.insert(e);
+                throw (e);
+            }
+        }
+
+        function addMenuChildren(con, data){
+            for (var i = data.length-1; i>=0; --i){
+                var li = document.createElement("li");
+                con.insertBefore(li, con.firstChild);
+                var a = document.createElement("a");
+                a.setAttribute("href", "javascript:void(0);");
+                li.appendChild(a);
+                a.innerText = data[i].name;
+
+                switch(data[i].type){
+                    case "group":{
+                        var ul = document.createElement('ul');
+                        li.appendChild(ul);
+                        addMenuChildren(ul, data[i].children)
+                        a.className="dir";
+                        break;
+                    }
+                    case "link": {
+                        a.setAttribute("href", data[i].link);
+                        a.setAttribute("target", "_blank");
+                        break;
+                    }
+                    case "case":{
+                        a.onclick = (function(url){
+                            return function(){
+                                ace.require("ace/lib/net").get(url, function(t){
+                                    luaEditor.setValue("");
+                                    luaEditor.insert(t);
+                                    luaEditor.focus();
+                                })
+                            }
+                        })(data[i].url);
+                    }
+                }
+            }
+        }
+
+        ace.require("ace/lib/net").get("testcases.json", function(t){
+            addMenuChildren(document.getElementById("menu"), JSON.parse(t).cases);
+        })
+
+    </script>
+</body>
+</html>

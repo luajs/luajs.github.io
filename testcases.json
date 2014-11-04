@@ -1,0 +1,160 @@
+{
+    "cases": [
+        {
+            "type": "group",
+            "name": "Test cases",
+            "children": [
+                {
+                    "type": "group",
+                    "name": "Basic Lua",
+                    "children": [
+                        {
+                            "type": "case",
+                            "name": "Hello, lua.js",
+                            "url": "cases/basic/hello.lua"
+                        },
+                        {
+                            "type": "case",
+                            "name": "Variable Scope",
+                            "url": "cases/basic/variable.lua"
+                        },
+                        {
+                            "type": "group",
+                            "name": "Table",
+                            "children":[
+                                {
+                                    "type": "label",
+                                    "name": "No cases available."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "name": "Function",
+                            "children":[
+                                {
+                                    "type": "case",
+                                    "name": "A+B",
+                                    "url": "cases/function/add.lua"
+                                },
+                                {
+                                    "type": "case",
+                                    "name": "Indexed function",
+                                    "url": "cases/function/indexed.lua"
+                                },
+                                {
+                                    "type": "case",
+                                    "name": "Call with return values",
+                                    "url": "cases/function/call_with_return.lua"
+                                },
+                                {
+                                    "type": "case",
+                                    "name": "Variable arguments",
+                                    "url": "cases/function/variable_arguments.lua"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "name": "Statements",
+                            "children":[
+                                {
+                                    "type": "case",
+                                    "name": "If statement",
+                                    "url": "cases/statement/if.lua"
+                                },
+                                {
+                                    "type": "case",
+                                    "name": "For statement",
+                                    "url": "cases/statement/for.lua"
+                                },
+                                {
+                                    "type": "case",
+                                    "name": "For-in statement",
+                                    "url": "cases/statement/for_in.lua"
+                                },
+                                {
+                                    "type": "case",
+                                    "name": "While & Repeat",
+                                    "url": "cases/statement/while_repeat.lua"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "name": "Expression",
+                            "children":[
+                                {
+                                    "type": "label",
+                                    "name": "No cases available."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "name": "String",
+                            "children":[
+                                {
+                                    "type": "label",
+                                    "name": "No cases available."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "name": "lua.js extension",
+                    "children":[
+                        {
+                            "type": "case",
+                            "name": "Inline Javascript",
+                            "url": "cases/extension/inline_javascript.lua"
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "name": "Other cases",
+                    "children":[
+                        {
+                            "type": "case",
+                            "name": "Y Combinator",
+                            "url": "cases/others/y_combinator.lua"
+                        },
+                        {
+                            "type": "case",
+                            "name": "Singleton",
+                            "url": "cases/others/singleton.lua"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "name": "TODOs",
+            "children": [
+                {
+                    "type": "label",
+                    "name": "Metatable"
+                },
+                {
+                    "type": "label",
+                    "name": "Standard libs"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "name": "Bugs",
+            "children": [
+                {
+                    "type": "link",
+                    "name": "Click to report bugs",
+                    "link": "https://github.com/tdzl2003/lua.js/issues"
+                }
+            ]
+        }
+    ]
+}
