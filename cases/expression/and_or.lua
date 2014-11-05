@@ -20,3 +20,4 @@ assert((false and 0 or 1) == 1)
 assert(("a" or "b") == "a")
 assert(("" and "a") == "a")
 
+print("OK")

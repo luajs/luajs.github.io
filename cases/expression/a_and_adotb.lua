@@ -3,4 +3,4 @@
 
 local a
 
-print(a and a.b)   -- should output 'nil'
+print(a and a.b)   -- should output 'nil' without errors.

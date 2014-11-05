@@ -85,8 +85,14 @@
                             "name": "Expression",
                             "children":[
                                 {
-                                    "type": "label",
-                                    "name": "No cases available."
+                                    "type": "case",
+                                    "name": "A and A.B",
+                                    "url": "cases/expression/a_and_adotb.lua"
+                                },
+                                {
+                                    "type": "case",
+                                    "name": "`and` & `or` operators",
+                                    "url": "cases/expression/and_or.lua"
                                 }
                             ]
                         },
