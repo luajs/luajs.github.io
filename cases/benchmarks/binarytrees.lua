@@ -3,7 +3,7 @@
 -- contributed by Mike Pall
 
 __js [[
-    global.startTime = Date.now()
+    window.startTime = Date.now()
 ]]
 
 local string = {}
