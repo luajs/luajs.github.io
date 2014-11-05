@@ -8,6 +8,7 @@
             margin:0;
             padding:0
         }
+        body,html {width: 100%; height: 100%; overflow: hidden;}
         #lua {
             position:absolute;
             top: 34px;
@@ -15,13 +16,15 @@
             left: 0;
             right: 50%;
         }
-        #js{
+        #inc_js{ 
             position:absolute;
             top: 34px;
-            bottom: 40%;
-            left: 50%;
             right: 0;
+            bottom: 40%;
+            left: 50%; 
+            position: fixed;
         }
+        #js {position: absolute; left: 0; top: 0; right: 0; bottom: 10px;}
         #output{
             position:absolute;
             top: 60%;
@@ -69,8 +72,10 @@
         <li><a id="compile">Compile</a></li>
     </ul></div>
     <div style="float:right;color:white;">Lua.js Live demo</div>
-    <pre id="lua"></pre>
-    <pre id="js">/*Generated javascript code will be displayed here*/</pre>
+    <pre id="lua" style="border-right:1px solid #10161c;"></pre>
+    <div id="inc_js">
+        <pre id="js" style="">/*Generated javascript code will be displayed here*/</pre>
+    </div>
     <pre id="output">(`print` output and error messages will be displayed here)</pre>
 
 
