@@ -140,7 +140,7 @@
                         },
                         {
                             "type": "case",
-                            "name": "Singleton",
+                            "name": "Scrimark",
                             "url": "cases/benchmarks/scrimark.lua"
                         }
                     ]
