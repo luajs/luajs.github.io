@@ -105,6 +105,17 @@
                                     "name": "No cases available."
                                 }
                             ]
+                        },
+                        {
+                            "type": "group",
+                            "name": "Metatable",
+                            "children":[
+                                {
+                                    "type": "case",
+                                    "name": "Complex",
+                                    "url": "cases/metatable/complex.lua"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -157,10 +168,6 @@
             "type": "group",
             "name": "TODOs",
             "children": [
-                {
-                    "type": "label",
-                    "name": "Metatable"
-                },
                 {
                     "type": "label",
                     "name": "Standard libs"
