@@ -170,7 +170,25 @@
             "children": [
                 {
                     "type": "label",
-                    "name": "Standard libs"
+                    "name": "String patterns"
+                },
+                {
+                    "type": "label",
+                    "name": "Table iterating"
+                },
+                {
+                    "type": "label",
+                    "name": "Math.fmod, Math.frexp...",
+                    "extra": "Math.fmod, Math.frexp, Math.huge, Math.ldexp, Math.modf"
+                },
+                {
+                    "type": "label",
+                    "name": "bit32.extract, bit32.replace...",
+                    "extra": "bit32.extract, bit32.replace, bit32.lrotate, bit32.lshift, bit32.rrotate, bit32.rshift, "
+                },
+                {
+                    "type": "label",
+                    "name": "os.date, os.time([table])"
                 }
             ]
         },

@@ -1,11 +1,5 @@
 -- Complex
 
-local setmetatable = __js[[
-    function(a, mt){
-        a.metatable = mt;
-    }
-]]
-
 local Complex
 Complex = {
     __add = function(a, b)

@@ -2,10 +2,6 @@
 -- http://benchmarksgame.alioth.debian.org/
 -- contributed by Mike Pall
 
-__js [[
-    window.startTime = Date.now()
-]]
-
 local string = {}
 string.format = __js [[
     function (){
@@ -62,6 +58,4 @@ print(string.format("long lived tree of depth %d\t check: %d\n",
   maxdepth, ItemCheck(longlivedtree)))
 
 
-print(__js [[
-    (Date.now() -startTime)/1000
-]])
+print(os.clock())

@@ -98,15 +98,6 @@
         output.setReadOnly(true);
         output.renderer.setShowGutter(false);
 
-        luajs._G.set("print", function(){
-            for (var i = 0; i < arguments.length; i++){
-                arguments[i] = luajs.helpers.__tostring(arguments[i]);
-            }
-            var val = Array.prototype.join.call(arguments, '  ');
-            output.insert(val+"\n");
-            return [];
-        })
-
         var as = document.getElementsByTagName("a");
         for (var i = 0; i < as.length; i++){
             if (!as[i].getAttribute("href")){
@@ -124,9 +115,17 @@
                 var js = luajs.compile(code);
                 jsEditor.setValue("");
                 jsEditor.insert(js);
-                luajs.loadString(js)();
+
+                var L = luajs.newContext();
+                L.loadStdLib();
+                L._G.get("io").set("write", function(val){
+                    output.insert(val);
+                    return [];
+                })
+                L.loadString(js)();
             } catch(e){
                 output.insert(e.toString());
+                throw e;
             }
         }
 
@@ -142,6 +141,7 @@
                 jsEditor.insert(js);
             } catch(e){
                 output.insert(e.toString());
+                throw e;
             }
         }
 
