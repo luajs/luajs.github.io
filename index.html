@@ -121,8 +121,7 @@
                 jsEditor.insert(js);
                 luajs.loadString(js)();
             } catch(e){
-                output.insert(e);
-                throw (e);
+                output.insert(e.toString());
             }
         }
 
@@ -137,8 +136,7 @@
                 jsEditor.setValue("");
                 jsEditor.insert(js);
             } catch(e){
-                output.insert(e);
-                throw (e);
+                output.insert(e.toString());
             }
         }
 

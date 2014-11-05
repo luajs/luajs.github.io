@@ -5,6 +5,7 @@ function a.foo()
 end
 a.foo();
 function a:bar()
-  print("Hello!");
+  print("Hello!", self.s);
 end
+a.s = "foo"
 a:bar();
