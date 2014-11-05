@@ -128,6 +128,22 @@
                             "url": "cases/others/singleton.lua"
                         }
                     ]
+                },
+                {
+                    "type": "group",
+                    "name": "Benchmarks",
+                    "children": [
+                        {
+                            "type": "case",
+                            "name": "Binary Trees",
+                            "url": "cases/benchmarks/binarytrees.lua"
+                        },
+                        {
+                            "type": "case",
+                            "name": "Singleton",
+                            "url": "cases/benchmarks/scrimark.lua"
+                        }
+                    ]
                 }
             ]
         },
