@@ -16,12 +16,12 @@
             left: 0;
             right: 50%;
         }
-        #inc_js{ 
+        #inc_js{
             position:absolute;
             top: 34px;
             right: 0;
             bottom: 40%;
-            left: 50%; 
+            left: 50%;
             position: fixed;
         }
         #js {position: absolute; left: 0; top: 0; right: 0; bottom: 10px;}
@@ -78,117 +78,111 @@
     </div>
     <pre id="output">(`print` output and error messages will be displayed here)</pre>
 
-
     <script src="lua.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        var luaEditor = ace.edit("lua");
+    <script type="application/x-lua">
+        local luaEditor = ace.edit("lua");
         luaEditor.setTheme("ace/theme/monokai");
         luaEditor.getSession().setMode("ace/mode/lua");
         luaEditor.insert("-- Write lua codes here.\n")
         luaEditor.focus();
 
-        var jsEditor = ace.edit("js");
+        local jsEditor = ace.edit("js");
         jsEditor.setTheme("ace/theme/monokai");
         jsEditor.getSession().setMode("ace/mode/javascript");
         jsEditor.setReadOnly(true);
 
-        var output = ace.edit("output");
+        local output = ace.edit("output");
         output.setTheme("ace/theme/terminal");
         output.setReadOnly(true);
         output.renderer.setShowGutter(false);
 
-        var as = document.getElementsByTagName("a");
-        for (var i = 0; i < as.length; i++){
-            if (!as[i].getAttribute("href")){
-                as[i].setAttribute("href", "javascript:void(0);")
-            }
-        }
+        local as = document.getElementsByTagName("a");
+        for i,v in ipairs(as) do
+            if (not v.getAttribute("href")) then
+                v.setAttribute("href", "javascript:void(0);")
+            end
+        end
 
-        document.getElementById("run").onclick = function(){
-            if (window.FlurryAgent){
+        document.getElementById("run").onclick = function()
+            if (FlurryAgent) then
                 FlurryAgent.logEvent("run");
-            }
-            var code = luaEditor.getValue();
+            end
+            local code = luaEditor.getValue();
             output.setValue("");
-            try{
-                var js = luajs.compile(code);
+            function run()
+                local js = luajs.compile(code);
                 jsEditor.setValue("");
                 jsEditor.insert(js);
 
-                var L = luajs.newContext();
+                local L = luajs.newContext();
                 L.loadStdLib();
-                L._G.get("io").set("write", function(val){
+                L._G.io.write = function(val)
                     output.insert(val);
-                    return [];
-                })
+                end
                 L.loadString(js)();
-            } catch(e){
-                output.insert(e.toString());
-                throw e;
-            }
-        }
+            end
+            xpcall(run, function(e)
+                output.insert(e.toString())
+                error(e)
+            end)
+        end
 
-        document.getElementById("compile").onclick = function(){
-            if (window.FlurryAgent){
-                FlurryAgent.logEvent("compile");
-            }
-            var code = luaEditor.getValue();
+        document.getElementById("compile").onclick = function()
+            if (FlurryAgent) then
+                FlurryAgent.logEvent("run");
+            end
+            local code = luaEditor.getValue();
             output.setValue("");
-            try{
-                var js = luajs.compile(code);
+            function run()
+                local js = luajs.compile(code);
                 jsEditor.setValue("");
                 jsEditor.insert(js);
-            } catch(e){
-                output.insert(e.toString());
-                throw e;
-            }
-        }
+            end
+            xpcall(run, function(e)
+                output.insert(e.toString())
+                error(e)
+            end)
+        end
 
-        function addMenuChildren(con, data){
-            for (var i = data.length-1; i>=0; --i){
-                var li = document.createElement("li");
+        function addMenuChildren(con, data)
+            for i = #data,1,-1 do
+                local li = document.createElement("li");
                 con.insertBefore(li, con.firstChild);
-                var a = document.createElement("a");
+                local a = document.createElement("a");
                 a.setAttribute("href", "javascript:void(0);");
                 li.appendChild(a);
                 a.innerText = data[i].name;
 
-                switch(data[i].type){
-                    case "group":{
-                        var ul = document.createElement('ul');
-                        li.appendChild(ul);
-                        addMenuChildren(ul, data[i].children)
-                        a.className="dir";
-                        break;
-                    }
-                    case "link": {
-                        a.setAttribute("href", data[i].link);
-                        a.setAttribute("target", "_blank");
-                        break;
-                    }
-                    case "case":{
-                        a.onclick = (function(url){
-                            return function(){
-                                ace.require("ace/lib/net").get(url, function(t){
-                                    luaEditor.setValue("");
-                                    luaEditor.insert(t);
-                                    luaEditor.focus();
-                                })
-                            }
-                        })(data[i].url);
-                    }
-                }
-            }
-        }
+                if (data[i].type == "group") then
+                    local ul = document.createElement('ul');
+                    li.appendChild(ul);
+                    addMenuChildren(ul, data[i].children)
+                    a.className="dir";
+                elseif (data[i].type == "link") then
+                    a.setAttribute("href", data[i].link);
+                    a.setAttribute("target", "_blank");
+                elseif (data[i].type == "case") then
+                    a.onclick = (function(url)
+                        return function()
+                            ace.require("ace/lib/net").get(url, function(t)
+                                luaEditor.setValue("");
+                                luaEditor.insert(t);
+                                luaEditor.focus();
+                            end)
+                        end
+                    end)(data[i].url);
+                end
+            end
+        end
 
-        ace.require("ace/lib/net").get("testcases.json", function(t){
+        ace.require("ace/lib/net").get("testcases.json", function(t)
             addMenuChildren(document.getElementById("menu"), JSON.parse(t).cases);
-        })
-
+        end)
     </script>
 
-    <script type="application/javascript" src="https://cdn.flurry.com/js/flurry.js"></script>
-    <script type="application/javascript">FlurryAgent.startSession("VHTF6QNVGHFQFVXYVH3F");</script>
+
+    <!--<script type="application/javascript" src="https://cdn.flurry.com/js/flurry.js"></script>-->
+    <!--<script type="application/javascript">FlurryAgent.startSession("VHTF6QNVGHFQFVXYVH3F");</script>-->
 </body>
 </html>

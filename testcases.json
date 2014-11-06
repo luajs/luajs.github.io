@@ -197,9 +197,29 @@
             "name": "Bugs",
             "children": [
                 {
+                    "type": "case",
+                    "name": "Upvalue in repeat issue.",
+                    "url": "cases/bugs/upvalue.lua"
+                },
+                {
                     "type": "link",
                     "name": "Click to report bugs",
                     "link": "https://github.com/tdzl2003/lua.js/issues"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "name": "Demos",
+            "children": [
+                {
+                    "type": "link",
+                    "name": "jQuery with lua.js",
+                    "link": "demos/jquery/index.html"
+                },
+                {
+                    "type": "label",
+                    "name": "This site self"
                 }
             ]
         }

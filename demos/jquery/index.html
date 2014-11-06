@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../../lua.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    <pre id="text"></pre>
+    <script type="application/x-lua">
+        local jq = __js"$"
+
+        jq("#text").html("Loading...")
+        jq.get("index.html", function(data)
+            jq("#text").text(data)
+        end)
+    </script>
+</body>
+</html>
