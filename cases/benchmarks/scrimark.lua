@@ -34,7 +34,7 @@ local unpack = table.unpack
 local string = {}
 string.format = __js [[
     function (){
-        return [Array.prototype.join.call(arguments, '  ')];
+        return Array.prototype.join.call(arguments, '  ');
     }
 ]]
 
