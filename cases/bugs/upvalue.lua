@@ -10,4 +10,4 @@ for i = 1, 10 do
     t[i]()
 end
 
--- should print 1 to 10, but print 11s now.
+-- should print 1 to 10, print 11s in recent version.

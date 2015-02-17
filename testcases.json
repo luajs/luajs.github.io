@@ -161,6 +161,17 @@
                             "url": "cases/benchmarks/scrimark.lua"
                         }
                     ]
+                },
+                {
+                    "type": "group",
+                    "name": "Recent Bugs",
+                    "children":[
+                        {
+                            "type": "case",
+                            "name": "Upvalue in repeat issue.",
+                            "url": "cases/bugs/upvalue.lua"
+                        }
+                    ]
                 }
             ]
         },
@@ -196,11 +207,6 @@
             "type": "group",
             "name": "Bugs",
             "children": [
-                {
-                    "type": "case",
-                    "name": "Upvalue in repeat issue.",
-                    "url": "cases/bugs/upvalue.lua"
-                },
                 {
                     "type": "link",
                     "name": "Click to report bugs",
